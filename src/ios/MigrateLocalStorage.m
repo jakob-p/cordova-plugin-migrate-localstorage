@@ -13,9 +13,9 @@
 #define ORIG_LS_CACHE @"Caches/file__0.localstorage"
 #define ORIG_IDB_CACHE @"Caches/___IndexedDB/v1/file__0"
 // #define TARGET_LS_FILEPATH @"WebsiteData/LocalStorage/file__0.localstorage" // original cordova file
-#define TARGET_LS_FILEPATH @"WebKit/WebsiteData/LocalStorage/http_localhost_49017.localstorage"
+#define TARGET_LS_FILEPATH @"WebKit/WebsiteData/LocalStorage/http_localhost_49016.localstorage"
 #define ORIG_IDB_FILEPATH @"WebKit/LocalStorage/___IndexedDB/file__0"
-#define TARGET_IDB_FILEPATH @"WebKit/WebsiteData/IndexedDB/http_localhost_49017"
+#define TARGET_IDB_FILEPATH @"WebKit/WebsiteData/IndexedDB/http_localhost_49016"
 
 @implementation MigrateLocalStorage
 
