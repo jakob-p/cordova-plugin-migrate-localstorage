@@ -16,6 +16,7 @@
 #define TARGET_LS_FILEPATH @"WebKit/WebsiteData/LocalStorage/http_localhost_49017.localstorage"
 #define ORIG_IDB_FILEPATH @"WebKit/LocalStorage/___IndexedDB/file__0"
 #define TARGET_IDB_FILEPATH @"WebKit/WebsiteData/IndexedDB/http_localhost_49017"
+#define TARGET_IDB_FILEPATH_FROMCACHE @"WebKit/WebsiteData/IndexedDB/v1/http_localhost_49017"
 
 @implementation MigrateLocalStorage
 
@@ -173,8 +174,14 @@
 */
 - (NSString*) resolveTargetIDBFile {
     NSString* appLibraryFolder = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString* target = [appLibraryFolder stringByAppendingPathComponent:TARGET_IDB_FILEPATH];
+    NSString* target;
+    NSString* originalIDBFilePath = [appLibraryFolder stringByAppendingPathComponent:ORIG_IDB_FILEPATH];
     
+    if ([[NSFileManager defaultManager] fileExistsAtPath:originalIDBFilePath]) {
+        target = [appLibraryFolder stringByAppendingPathComponent:TARGET_IDB_FILEPATH];
+    } else {
+        target = [appLibraryFolder stringByAppendingPathComponent:TARGET_IDB_FILEPATH_FROMCACHE];
+    }
     #if TARGET_IPHONE_SIMULATOR
         // the simulator squeezes the bundle id into the path
     
