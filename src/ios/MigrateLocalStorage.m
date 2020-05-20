@@ -51,7 +51,7 @@
 
     // Bail out if source file does not exist // not really necessary <- error case already handle by fileManager copyItemAtPath
     if (![fileManager fileExistsAtPath:src]) {
-        NSLog(@"%@ Source file does not exist", TAG);
+        // NSLog(@"%@ Source file does not exist", TAG);
         return NO;
     }
 
@@ -185,7 +185,6 @@
     NSString* target;
     NSString* originalIDBFilePath = [appLibraryFolder stringByAppendingPathComponent:ORIG_IDB_FILEPATH];
     NSString* originalIDBCache = [appLibraryFolder stringByAppendingPathComponent:ORIG_IDB_CACHE];
-    NSString* originalIDBCache2 = [appLibraryFolder stringByAppendingPathComponent:ORIG_IDB_CACHE_2];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:originalIDBFilePath]) {
         target = [appLibraryFolder stringByAppendingPathComponent:TARGET_IDB_FILEPATH];
