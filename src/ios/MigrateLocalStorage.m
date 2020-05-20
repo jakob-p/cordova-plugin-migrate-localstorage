@@ -12,11 +12,14 @@
 #define ORIG_LS_FILEPATH @"WebKit/LocalStorage/file__0.localstorage"
 #define ORIG_LS_CACHE @"Caches/file__0.localstorage"
 #define ORIG_IDB_CACHE @"Caches/___IndexedDB/v1/file__0"
+#define ORIG_IDB_CACHE_2 @"Caches/___IndexedDB/file__0"
+
 // #define TARGET_LS_FILEPATH @"WebsiteData/LocalStorage/file__0.localstorage" // original cordova file
 #define TARGET_LS_FILEPATH @"WebKit/WebsiteData/LocalStorage/http_localhost_49016.localstorage"
 #define ORIG_IDB_FILEPATH @"WebKit/LocalStorage/___IndexedDB/file__0"
 #define TARGET_IDB_FILEPATH @"WebKit/WebsiteData/IndexedDB/http_localhost_49016"
 #define TARGET_IDB_FILEPATH_FROMCACHE @"WebKit/WebsiteData/IndexedDB/v1/http_localhost_49016"
+#define TARGET_IDB_FILEPATH_FROMCACHE_2 @"WebKit/WebsiteData/IndexedDB/http_localhost_49016"
 
 @implementation MigrateLocalStorage
 
@@ -160,11 +163,16 @@
     NSString* original;
     
     NSString* originalIDBFilePath = [appLibraryFolder stringByAppendingPathComponent:ORIG_IDB_FILEPATH];
+    NSString* originalIDBCache = [appLibraryFolder stringByAppendingPathComponent:ORIG_IDB_CACHE];
+    NSString* originalIDBCache2 = [appLibraryFolder stringByAppendingPathComponent:ORIG_IDB_CACHE_2];
+
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:originalIDBFilePath]) {
         original = originalIDBFilePath;
+    } else if ([[NSFileManager defaultManager] fileExistsAtPath:originalIDBCache]) {
+        original = originalIDBCache;
     } else {
-        original = [appLibraryFolder stringByAppendingPathComponent:ORIG_IDB_CACHE];
+        original = originalIDBCache2;
     }
     return original;
 }
@@ -176,11 +184,14 @@
     NSString* appLibraryFolder = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString* target;
     NSString* originalIDBFilePath = [appLibraryFolder stringByAppendingPathComponent:ORIG_IDB_FILEPATH];
+    NSString* originalIDBCache = [appLibraryFolder stringByAppendingPathComponent:ORIG_IDB_CACHE];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:originalIDBFilePath]) {
         target = [appLibraryFolder stringByAppendingPathComponent:TARGET_IDB_FILEPATH];
-    } else {
+    } else if ([[NSFileManager defaultManager] fileExistsAtPath:originalIDBCache]) {
         target = [appLibraryFolder stringByAppendingPathComponent:TARGET_IDB_FILEPATH_FROMCACHE];
+    } else {
+        target = [appLibraryFolder stringByAppendingPathComponent:TARGET_IDB_FILEPATH_FROMCACHE_2];
     }
     #if TARGET_IPHONE_SIMULATOR
         // the simulator squeezes the bundle id into the path
